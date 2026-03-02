@@ -19,4 +19,7 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         pass
     finally:
+        # Stop the web server if it's running
+        if server.started:
+            TelegramBot.loop.run_until_complete(server.shutdown())
         TelegramBot.loop.run_until_complete(TelegramBot.stop())
