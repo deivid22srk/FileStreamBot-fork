@@ -7,7 +7,7 @@ from bot.modules.decorators import verify_user
 from bot.modules.static import *
 from bot.modules.database.db import add_file
 from bot.modules.telegram import get_file_properties
-@TelegramBot.on_message((
+@TelegramBot.on_message(
     filters.private
     & (
         filters.document

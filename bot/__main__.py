@@ -6,10 +6,10 @@ import asyncio
 
 async def main():
     init_db()
+    await TelegramBot.start()
     await restore_db()
     TelegramBot.loop.create_task(server.serve())
     TelegramBot.loop.create_task(start_backup_loop())
-    await TelegramBot.start()
     print("Bot started!")
     await asyncio.Event().wait()
 
