@@ -37,8 +37,12 @@ MediaLinksText = \
 """
 **Download Link:**
 `%(dl_link)s`
+
 **Stream Link:**
 `%(stream_link)s`
+
+**Direct Stream Link (VLC/Player):**
+`%(direct_link)s`
 """
 
 InvalidQueryText = \
