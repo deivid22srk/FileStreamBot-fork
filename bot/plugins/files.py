@@ -27,8 +27,8 @@ async def handle_user_file(_, msg: Message):
         caption=f'||{secret_code}/{sender_id}||'
     )
     file_id = file.id
-    file_name, file_size, _ = get_file_properties(msg)
-    add_file(file_id, sender_id, secret_code, file_name, file_size)
+    file_name, file_size, mime_type = get_file_properties(msg)
+    add_file(file_id, sender_id, secret_code, file_name, file_size, mime_type)
     dl_link = f'{Server.BASE_URL}/dl/{file_id}?code={secret_code}'
 
     if (msg.document and 'video' in msg.document.mime_type) or msg.video:
