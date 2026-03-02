@@ -5,7 +5,7 @@ from bot import TelegramBot
 from bot.config import Telegram, Server
 from bot.modules.decorators import verify_user
 from bot.modules.static import *
-from bot.modules.database.db import add_file
+from bot.modules.database.db import add_file, init_db
 from bot.modules.telegram import get_file_properties
 @TelegramBot.on_message(
     filters.private
@@ -20,6 +20,7 @@ from bot.modules.telegram import get_file_properties
 )
 @verify_user
 async def handle_user_file(_, msg: Message):
+    init_db() # Ensure DB is ready
     sender_id = msg.from_user.id
     secret_code = token_hex(Telegram.SECRET_CODE_LENGTH)
     file = await msg.copy(
