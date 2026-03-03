@@ -1,11 +1,11 @@
 from bot import TelegramBot
 from bot.server import server
-from bot.modules.database.db import init_db
+from bot.modules.database.json_db import init_json
 from bot.modules.backup import restore_db, start_backup_loop
 import asyncio
 
 async def main():
-    init_db()
+    init_json()
     await TelegramBot.start()
     await restore_db()
     TelegramBot.loop.create_task(server.serve())
