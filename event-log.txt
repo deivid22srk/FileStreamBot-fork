@@ -1,0 +1,34 @@
+[02/03/2026 19:30:15][hydrogram.session.auth][INFO] -> Start creating a new auth key on DC2
+[02/03/2026 19:30:15][hydrogram.connection.connection][INFO] -> Connecting...
+[02/03/2026 19:30:15][hydrogram.connection.connection][INFO] -> Connected! Production DC2 - IPv4
+[02/03/2026 19:30:17][hydrogram.session.auth][INFO] -> Done auth key exchange: DhGenOk
+[02/03/2026 19:30:17][hydrogram.connection.connection][INFO] -> Disconnected
+[02/03/2026 19:30:17][hydrogram.connection.connection][INFO] -> Connecting...
+[02/03/2026 19:30:17][hydrogram.connection.connection][INFO] -> Connected! Production DC2 - IPv4
+[02/03/2026 19:30:17][hydrogram.session.session][INFO] -> NetworkTask started
+[02/03/2026 19:30:17][hydrogram.session.session][INFO] -> Session initialized: Layer 181
+[02/03/2026 19:30:17][hydrogram.session.session][INFO] -> Device: CPython 3.11.0rc1 - Hydrogram 0.2.0
+[02/03/2026 19:30:17][hydrogram.session.session][INFO] -> System: Linux 6.1.102 (en)
+[02/03/2026 19:30:17][hydrogram.session.session][INFO] -> Session started
+[02/03/2026 19:30:17][hydrogram.session.session][INFO] -> PingTask started
+[02/03/2026 19:30:17][hydrogram.session.session][INFO] -> PingTask stopped
+[02/03/2026 19:30:17][hydrogram.connection.connection][INFO] -> Disconnected
+[02/03/2026 19:30:17][hydrogram.session.session][INFO] -> NetworkTask stopped
+[02/03/2026 19:30:17][hydrogram.session.session][INFO] -> Session stopped
+[02/03/2026 19:30:17][hydrogram.session.auth][INFO] -> Start creating a new auth key on DC1
+[02/03/2026 19:30:17][hydrogram.connection.connection][INFO] -> Connecting...
+[02/03/2026 19:30:17][hydrogram.connection.connection][INFO] -> Connected! Production DC1 - IPv4
+[02/03/2026 19:30:18][hydrogram.session.auth][INFO] -> Done auth key exchange: DhGenOk
+[02/03/2026 19:30:18][hydrogram.connection.connection][INFO] -> Disconnected
+[02/03/2026 19:30:18][hydrogram.connection.connection][INFO] -> Connecting...
+[02/03/2026 19:30:18][hydrogram.connection.connection][INFO] -> Connected! Production DC1 - IPv4
+[02/03/2026 19:30:18][hydrogram.session.session][INFO] -> NetworkTask started
+[02/03/2026 19:30:19][hydrogram.session.session][INFO] -> Session initialized: Layer 181
+[02/03/2026 19:30:19][hydrogram.session.session][INFO] -> Device: CPython 3.11.0rc1 - Hydrogram 0.2.0
+[02/03/2026 19:30:19][hydrogram.session.session][INFO] -> System: Linux 6.1.102 (en)
+[02/03/2026 19:30:19][hydrogram.session.session][INFO] -> Session started
+[02/03/2026 19:30:19][hydrogram.session.session][INFO] -> PingTask started
+[02/03/2026 19:30:19][hydrogram.client][WARNING] -> [bot] No plugin loaded from "bot.plugins"
+[02/03/2026 19:30:19][hydrogram.dispatcher][INFO] -> Started 10 HandlerTasks
+[02/03/2026 19:30:19][uvicorn][INFO] -> Web server is started!
+[02/03/2026 19:30:19][uvicorn][INFO] -> Server running on 0.0.0.0:5000
