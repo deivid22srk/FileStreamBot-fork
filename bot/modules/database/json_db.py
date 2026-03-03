@@ -9,11 +9,12 @@ def init_json():
         with open(JSON_PATH, 'w', encoding='utf-8') as f:
             json.dump([], f, indent=4)
 
-def add_file_json(file_id, sender_id, secret_code, file_name, file_size, mime_type, dl_link, stream_link=None, direct_link=None):
+def add_file_json(file_id, file_unique_id, sender_id, secret_code, file_name, file_size, mime_type, dl_link, stream_link=None, direct_link=None):
     init_json()
     
     new_entry = {
         "file_id": file_id,
+        "file_unique_id": file_unique_id,
         "sender_id": sender_id,
         "secret_code": secret_code,
         "file_name": file_name,
@@ -28,8 +29,8 @@ def add_file_json(file_id, sender_id, secret_code, file_name, file_size, mime_ty
     try:
         with open(JSON_PATH, 'r+', encoding='utf-8') as f:
             data = json.load(f)
-            # Evitar duplicatas
-            data = [entry for entry in data if entry["file_id"] != file_id]
+            # Evitar duplicatas por file_id ou file_unique_id
+            data = [entry for entry in data if entry["file_id"] != file_id and entry.get("file_unique_id") != file_unique_id]
             data.append(new_entry)
             f.seek(0)
             json.dump(data, f, indent=4, ensure_ascii=False)
@@ -45,3 +46,19 @@ def get_all_files_json():
             return json.load(f)
     except Exception:
         return []
+
+def delete_all_files_json():
+    try:
+        with open(JSON_PATH, 'w', encoding='utf-8') as f:
+            json.dump([], f, indent=4)
+        return True
+    except Exception as e:
+        print(f"JSON DB Delete Error: {e}")
+        return False
+
+def get_file_by_unique_id(file_unique_id):
+    files = get_all_files_json()
+    for file in files:
+        if file.get("file_unique_id") == file_unique_id:
+            return file
+    return None

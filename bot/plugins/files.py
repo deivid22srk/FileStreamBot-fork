@@ -5,7 +5,7 @@ from bot import TelegramBot
 from bot.config import Telegram, Server
 from bot.modules.decorators import verify_user
 from bot.modules.static import *
-from bot.modules.database.json_db import add_file_json, init_json
+from bot.modules.database.json_db import add_file_json, init_json, get_file_by_unique_id
 from bot.modules.telegram import get_file_properties
 @TelegramBot.on_message(
     filters.private
@@ -23,30 +23,42 @@ async def handle_user_file(_, msg: Message):
     try:
         init_json() # Ensure JSON DB is ready
         sender_id = msg.from_user.id
-        secret_code = token_hex(Telegram.SECRET_CODE_LENGTH)
         
-        # Copy file to channel
-        file = await msg.copy(
-            chat_id=Telegram.CHANNEL_ID,
-            caption=f'||{secret_code}/{sender_id}||'
-        )
-        file_id = file.id
+        # Check if file already exists
+        file_obj = getattr(msg, msg.media.value)
+        file_unique_id = file_obj.file_unique_id
+        existing_file = get_file_by_unique_id(file_unique_id)
         
-        # Get properties
-        file_name, file_size, mime_type = get_file_properties(msg)
-        dl_link = f'{Server.BASE_URL}/dl/{file_id}?code={secret_code}'
-        stream_link = None
-        direct_link = None
-        
-        if (msg.document and 'video' in msg.document.mime_type) or msg.video:
-            stream_link = f'{Server.BASE_URL}/stream/{file_id}?code={secret_code}'
-            direct_link = f'{Server.BASE_URL}/dl/{file_id}?code={secret_code}'
+        if existing_file:
+            file_id = existing_file["file_id"]
+            secret_code = existing_file["secret_code"]
+            dl_link = existing_file["dl_link"]
+            stream_link = existing_file["stream_link"]
+            direct_link = existing_file["direct_link"]
+        else:
+            secret_code = token_hex(Telegram.SECRET_CODE_LENGTH)
+            # Copy file to channel
+            file = await msg.copy(
+                chat_id=Telegram.CHANNEL_ID,
+                caption=f'||{secret_code}/{sender_id}||'
+            )
+            file_id = file.id
             
-        # Save to JSON DB
-        try:
-            add_file_json(file_id, sender_id, secret_code, file_name, file_size, mime_type, dl_link, stream_link, direct_link)
-        except Exception as db_err:
-            print(f"JSON DB Error (Non-fatal): {db_err}")
+            # Get properties
+            file_name, file_size, mime_type = get_file_properties(msg)
+            dl_link = f'{Server.BASE_URL}/dl/{file_id}?code={secret_code}'
+            stream_link = None
+            direct_link = None
+            
+            if (msg.document and 'video' in msg.document.mime_type) or msg.video:
+                stream_link = f'{Server.BASE_URL}/stream/{file_id}?code={secret_code}'
+                direct_link = f'{Server.BASE_URL}/dl/{file_id}?code={secret_code}'
+                
+            # Save to JSON DB
+            try:
+                add_file_json(file_id, file_unique_id, sender_id, secret_code, file_name, file_size, mime_type, dl_link, stream_link, direct_link)
+            except Exception as db_err:
+                print(f"JSON DB Error (Non-fatal): {db_err}")
 
         if stream_link:
             await msg.reply(
